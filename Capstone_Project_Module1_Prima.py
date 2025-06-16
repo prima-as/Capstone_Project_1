@@ -11,7 +11,7 @@ change_vehicle_list_menu = ('1. Change the Vehicle Data', '2. Return to Main Men
 Remove_vehicle_list_menu = ('1. Remove Vehicle Data', '2. Return to Main Menu')
 car_rental_form_menu = ('1. Rental Car Form', '2. Return Car Form', '3. Customer List', '4. Return to Main Menu')
 car_list_header = ['Plate Number (Primary Key)', 'Brand', 'Model', 'Transmission', 'Type', 'Year Of Manufacture', 'Rental Price/Day', 'Status']
-fleet_list = [['B1234WFA','Toyota','Avanza','Manual','MPV','2021',300_000,'Available'],['F2345DAS','Honda','Brio','Automatic','City Car','2023',350_000,'Maintenance'],['P7890GA','Toyota','Innova','EV','MPV','2023',600_000,'Rented'],['F6578RA','Suzuki','Fronx','Automatic','SUV','2025',500_000,'Rented']]
+fleet_list = [['B1234WFA','Toyota','Avanza','Manual','MPV','2021',300_000,'Rented'],['F2345DAS','Honda','Brio','Automatic','City Car','2023',350_000,'Maintenance'],['P7890GA','Toyota','Innova','Hybrid','MPV','2023',600_000,'Rented'],['F6578RA','Suzuki','Fronx','Automatic','SUV','2025',500_000,'Rented'],['B534LL','BYD','Seal','EV','Sedan','2022',700_000,'Available']]
 customer_header = ('Plate Number', 'Name', 'Phone Number', 'Total Rental Days', 'Payment', 'Status')
 list_of_customer = [['P7890GA', 'Ade', '085256749082', 3, 600_000, 'Renting'],['B1234WFA', 'Sukrono', '082354679877', 2, 300_000, 'Returned'],['B1234WFA', 'Arzan', '085278965426', 4, 300_000, 'Renting'],['F6578RA', 'Puspita', '087792337824', 1, 500_000, 'Renting']]
 header_for_print = f'{car_list_header[0]:^30}|{car_list_header[1]:^10}|{car_list_header[2]:^8}|{car_list_header[3]:^13}|{car_list_header[4]:^10}|{car_list_header[5]:^20}|{car_list_header[6]:^17}|{car_list_header[7]:^12}'
@@ -423,14 +423,14 @@ def customer_valid_check():
             continue
 
 def car_return_form():
-    while True: # bug
+    while True:
         input_plate_number4 = input('Enter the plate number to check the customer: ').upper()
         for i in list_of_customer:
             if input_plate_number4 == i[0] and i[5] == 'Renting':
                 print(f'\n{customer_header[0]:^15}|{customer_header[1]:^15}|{customer_header[2]:^14}|{customer_header[3]:^20}|{customer_header[4]:^10}|{customer_header[5]:^10}')
                 print(f'{'-'*15}+{'-'*15}+{'-'*14}+{'-'*20}+{'-'*10}+{'-'*10}')
                 print(f'{i[0]:^15}|{i[1]:^15}|{i[2]:^14}|{i[3]:^20,}|{i[4]:^10,}|{i[5]:^10}')
-                break
+                break        
         else:
             print(f'\n***** No Car with plate number "{input_plate_number4}" in being Rented *****\n')
             continue
