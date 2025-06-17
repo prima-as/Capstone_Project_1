@@ -11,7 +11,7 @@ change_vehicle_list_menu = ('1. Change the Vehicle Data', '2. Return to Main Men
 Remove_vehicle_list_menu = ('1. Remove Vehicle Data', '2. Return to Main Menu')
 car_rental_form_menu = ('1. Rental Car Form', '2. Return Car Form', '3. Customer List', '4. Return to Main Menu')
 car_list_header = ['Plate Number (Primary Key)', 'Brand', 'Model', 'Transmission', 'Type', 'Year Of Manufacture', 'Rental Price/Day', 'Status']
-fleet_list = [['B1234WFA','Toyota','Avanza','Manual','MPV','2021',300_000,'Rented'],['F2345DAS','Honda','Brio','Automatic','City Car','2023',350_000,'Maintenance'],['P7890GA','Toyota','Innova','Hybrid','MPV','2023',600_000,'Rented'],['F6578RA','Suzuki','Fronx','Automatic','SUV','2025',500_000,'Rented'],['B534LL','BYD','Seal','EV','Sedan','2022',700_000,'Available']]
+fleet_list = [['B1234WFA','Toyota','Avanza','Manual','MPV','2021',300_000,'Rented'],['F2345DAS','Honda','Brio','Automatic','City Car','2023',350_000,'Maintenance'],['P7890GA','Toyota','Innova','Hybrid','MPV','2023',600_000,'Rented'],['F6578RA','Suzuki','Fronx','Automatic','SUV','2025',500_000,'Rented'],['B534LL','BYD','Seal','EV','Sedan','2022',700_000,'Available'],['D4568HI','Hyundai','Creta','Manual','SUV','2021',500_000,'Available']]
 customer_header = ('Plate Number', 'Name', 'Phone Number', 'Total Rental Days', 'Payment', 'Status')
 list_of_customer = [['P7890GA', 'Ade', '085256749082', 3, 600_000, 'Renting'],['B1234WFA', 'Sukrono', '082354679877', 2, 300_000, 'Returned'],['B1234WFA', 'Arzan', '085278965426', 4, 300_000, 'Renting'],['F6578RA', 'Puspita', '087792337824', 1, 500_000, 'Renting']]
 header_for_print = f'{car_list_header[0]:^30}|{car_list_header[1]:^10}|{car_list_header[2]:^8}|{car_list_header[3]:^13}|{car_list_header[4]:^10}|{car_list_header[5]:^20}|{car_list_header[6]:^17}|{car_list_header[7]:^12}'
@@ -95,28 +95,33 @@ def filter_by_category():
         print(filtered_vehicle[0])
         break
 
-def fleet_filtered_by_odd_even(filter_item):
-    odd_even = []
-    for i in range(len(fleet_list)):
-        plate_number = ''
-        for j in fleet_list[i][0]:
-            if '0' <= j <= '9':
-                plate_number += j        
-        odd_even.append(int(plate_number[-1]))
-    if filter_item == 'odd':
-        print(header_for_print)
-        print('-'*124)
-        for i in range(len(odd_even)):
-            if odd_even[i] % 2 != 0:
-                print(f'{fleet_list[i][0]:^30}|{fleet_list[i][1]:^10}|{fleet_list[i][2]:^8}|{fleet_list[i][3]:^13}|{fleet_list[i][4]:^10}|{fleet_list[i][5]:^20}|{fleet_list[i][6]:^17}|{fleet_list[i][7]:^12}')
-    elif filter_item == 'even':
-        print(header_for_print)
-        print('-'*124)
-        for i in range(len(odd_even)):
-            if odd_even[i] % 2 == 0:
-                print(f'{fleet_list[i][0]:^30}|{fleet_list[i][1]:^10}|{fleet_list[i][2]:^8}|{fleet_list[i][3]:^13}|{fleet_list[i][4]:^10}|{fleet_list[i][5]:^20}|{fleet_list[i][6]:^17}|{fleet_list[i][7]:^12}')
-    else:
-        print('***** Your input is invalid *****')
+def fleet_filtered_by_odd_even():
+    while True:
+        odd_even = input('Input with odd or even: (odd/even) ').lower()
+        print()
+        odd_even_list = []
+        for i in range(len(fleet_list)):
+            plate_number = ''
+            for j in fleet_list[i][0]:
+                if '0' <= j <= '9':
+                    plate_number += j        
+            odd_even_list.append(int(plate_number[-1]))
+        if odd_even == 'odd':
+            print(header_for_print)
+            print('-'*124)
+            for i in range(len(odd_even_list)):
+                if odd_even_list[i] % 2 != 0:
+                    print(f'{fleet_list[i][0]:^30}|{fleet_list[i][1]:^10}|{fleet_list[i][2]:^8}|{fleet_list[i][3]:^13}|{fleet_list[i][4]:^10}|{fleet_list[i][5]:^20}|{fleet_list[i][6]:^17}|{fleet_list[i][7]:^12}')
+        elif odd_even == 'even':
+            print(header_for_print)
+            print('-'*124)
+            for i in range(len(odd_even)):
+                if odd_even_list[i] % 2 == 0:
+                    print(f'{fleet_list[i][0]:^30}|{fleet_list[i][1]:^10}|{fleet_list[i][2]:^8}|{fleet_list[i][3]:^13}|{fleet_list[i][4]:^10}|{fleet_list[i][5]:^20}|{fleet_list[i][6]:^17}|{fleet_list[i][7]:^12}')
+        else:
+            print('***** Your input is invalid *****\n')
+            continue
+        break
 
 def list_of_filtered_fleet():
     while True:
@@ -125,27 +130,17 @@ def list_of_filtered_fleet():
         filter_vehicle_item = input('Choose the filter item: (1-3) ')
         if filter_vehicle_item == '1':
             filter_by_category()
+            continue
         elif filter_vehicle_item == '2':
             print()
-            odd_even = input('Input with odd or even: (odd/even) ').lower()
+            fleet_filtered_by_odd_even()
             print()
-            fleet_filtered_by_odd_even(odd_even)
-            print()
+            continue
         elif filter_vehicle_item == '3':
             break
         else:
             print('\n***** The selected menu option does not exist *****\n')
             continue
-        while True:
-            question = input('Would you like to continue filtering? (yes/no) ')
-            if question == 'yes':
-                list_of_filtered_fleet()
-            elif question == 'no':
-                break
-            else:
-                print('\n***** Your input is invalid *****\n')
-                continue
-        break
 
 # New Vehicle Entry menu function
 def digit_check(value):
@@ -216,6 +211,7 @@ def add_vehicle(plate_number):
 def new_vehicle():
     while True:
         input_plate_number = input('Enter the plate number to check the fleet: ').upper()
+        input_plate_number = input_plate_number.replace(' ','')
         if plate_number_check(input_plate_number) == input_plate_number:
             print(f'\n***** The Car with plate number "{input_plate_number}" is in the Garage *****')
             break
@@ -247,6 +243,7 @@ def update_item(category, plate_number, update_value):
 def updated_vehicle():
     while True:
         input_plate_number1 = input('Enter the plate number to check the fleet: ').upper()
+        input_plate_number1 = input_plate_number1.replace(' ','')
         print()
         index_plate_number = plate_number_index(input_plate_number1)
         if plate_number_check(input_plate_number1) == input_plate_number1:
@@ -271,8 +268,7 @@ def updated_vehicle():
                             if check_digit == input_update_value:
                                 print()
                                 break
-                        else:
-                            continue
+                        break
                     while True:
                         input_save_question = input('Do you want to save the changes? (yes/no) ').lower()
                         if input_save_question == 'yes':
@@ -308,6 +304,7 @@ def remove_vehicle_from_list(input_plate_number):
 def remove_vehicle():
     while True:
         input_plate_number2 = input('Enter the plate number to check the fleet: ').upper()
+        input_plate_number2 = input_plate_number2.replace(' ','')
         print()
         plate_number_index2 = plate_number_index(input_plate_number2)
         if plate_number_check(input_plate_number2) == input_plate_number2:
@@ -330,7 +327,7 @@ def remove_vehicle():
                     continue
             break
         else:
-            print(f'***** The Car with plate number {input_plate_number2} is "NOT" in the garage *****')
+            print(f'***** The Car with plate number "{input_plate_number2}" is "NOT" in the garage *****')
             break
 
 # Customer Information Function
@@ -378,6 +375,7 @@ def add_new_customer(input_plate_number):
 
 def car_rental_form():
     input_plate_number3 = input('Enter the plate number to check the fleet: ').upper()
+    input_plate_number3 = input_plate_number3.replace(' ','')
     check_form = rental_form_check(input_plate_number3)
     if check_form == 'Available':
         print('\n***** The Car is Available *****\n')
@@ -425,6 +423,7 @@ def customer_valid_check():
 def car_return_form():
     while True:
         input_plate_number4 = input('Enter the plate number to check the customer: ').upper()
+        input_plate_number4 = input_plate_number4.replace(' ','')
         for i in list_of_customer:
             if input_plate_number4 == i[0] and i[5] == 'Renting':
                 print(f'\n{customer_header[0]:^15}|{customer_header[1]:^15}|{customer_header[2]:^14}|{customer_header[3]:^20}|{customer_header[4]:^10}|{customer_header[5]:^10}')
